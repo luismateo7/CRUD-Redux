@@ -1,5 +1,39 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+//Actions de Redux
+import { crearNuevoProductosAction } from "../actions/productoActions"
 
 export default function NuevoProducto() {
+
+  //State del componente
+  const [nombre, setNombre] = useState("");
+  const [precio, setPrecio] = useState("");
+
+
+  //Utilizar useDispatch y te crea una función
+  const dispatch = useDispatch();
+
+  //Mandar a llamar el action de productoAction
+  const agregarProducto = (producto) => dispatch( crearNuevoProductosAction(producto) );
+
+  const submitNuevoProducto = e => {
+    e.preventDefault();
+
+    //Validar Formulario
+    if(nombre.trim === "" || precio <= 0){
+      return;
+    }
+
+    //Si no hay errores
+
+    //Crear nuevo producto
+    agregarProducto({
+      nombre,
+      precio
+    });
+  }
+
   return (
     <div className="row justify-content-center">
       <div className="col-md-8">
@@ -9,7 +43,9 @@ export default function NuevoProducto() {
               Agregar Nuevo Producto
             </h2>
 
-            <form>
+            <form
+              onSubmit={submitNuevoProducto}
+            >
               <div className="form-group">
                 <label htmlFor="nombre">Nombre Producto</label>
                 <input
@@ -17,6 +53,8 @@ export default function NuevoProducto() {
                   className="form-control"
                   placeholder="Nombre Producto"
                   name="nombre"
+                  value={nombre}
+                  onChange={e => setNombre(e.target.value)}
                 />
               </div>
 
@@ -27,6 +65,8 @@ export default function NuevoProducto() {
                   className="form-control"
                   placeholder="Nombre Producto"
                   name="precio"
+                  value={precio}
+                  onChange={e => setPrecio(Number(e.target.value))}
                 />
               </div>
 
