@@ -1,7 +1,31 @@
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { editarProductosAction } from "../actions/productoActions";
 
 export default function EditarProducto() {
+
+  const producto = useSelector(state => state.productos.productoSeleccionado);
+  const navigate = useNavigate();
+
+  const [nombre, setNombre] = useState(producto?.nombre);
+  const [precio, setPrecio] = useState(producto?.precio)
+
+  const params = useParams();
+  const id = Number(params.id);
+
+  const dispatch = useDispatch();
+
+  const submitEditarProducto = e => {
+    e.preventDefault();
+
+    dispatch(editarProductosAction({id, nombre, precio}))
+
+    navigate("/")
+  }
+
   return (
-    <div className="row justify-content-center">
+    <main className="row justify-content-center my-5">
       <div className="col-md-8">
         <div className="card">
           <div className="card-body">
@@ -9,7 +33,9 @@ export default function EditarProducto() {
               Editar Producto
             </h2>
 
-            <form>
+            <form
+              onSubmit={submitEditarProducto}
+            >
               <div className="form-group">
                 <label htmlFor="nombre">Nombre Producto</label>
                 <input
@@ -17,6 +43,8 @@ export default function EditarProducto() {
                   className="form-control"
                   placeholder="Nombre Producto"
                   name="nombre"
+                  value={nombre}
+                  onChange={e => setNombre(e.target.value)}
                 />
               </div>
 
@@ -27,6 +55,8 @@ export default function EditarProducto() {
                   className="form-control"
                   placeholder="Nombre Producto"
                   name="precio"
+                  value={precio}
+                  onChange={e => setPrecio(Number(e.target.value))}
                 />
               </div>
 
@@ -41,6 +71,6 @@ export default function EditarProducto() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
