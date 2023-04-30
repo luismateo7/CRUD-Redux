@@ -1,29 +1,29 @@
 {
-    "productos": [
-        {
-            "id": 1,
-            "nombre": "Jugo de Zanahoria",
-            "precio": "31111"
-        },
-        {
-            "id": 2,
-            "nombre": "Jugo de Naranja",
-            "precio": "1"
-        },
-        {
-            "nombre": "Jugo de Naranja",
-            "precio": "300",
-            "id": 3
-        },
-        {
-            "nombre": "Rib Eye 800g",
-            "precio": "200",
-            "id": 4
-        },
-        {
-            "nombre": "Jugo de Fresa",
-            "precio": "200",
-            "id": 5
-        }
-    ]
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Jugo de Zanahoria",
+      "precio": 3000
+    },
+    {
+      "id": 2,
+      "nombre": "Rib Eye 1KG",
+      "precio": 400
+    },
+    {
+      "id": 3,
+      "nombre": "New York",
+      "precio": 600
+    },
+    {
+      "id": 4,
+      "nombre": "Picaña",
+      "precio": 800
+    },
+    {
+      "nombre": "Tequila",
+      "precio": 400,
+      "id": 5
+    }
+  ]
 }
