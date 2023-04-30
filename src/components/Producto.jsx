@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { eliminarProductosAction } from "../actions/productoActions";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { eliminarProductosAction, obtenerProductoEditarAction } from "../actions/productoActions";
 import Swal from "sweetalert2";
 
 export default function Producto({ producto }) {
+
+    const navigate = useNavigate();
 
     //Utilizar useDispatch y te crea una función
     const dispatch = useDispatch();
@@ -30,12 +32,22 @@ export default function Producto({ producto }) {
         })
     }
 
+    const redireccionEditar = producto => {
+        dispatch(obtenerProductoEditarAction(producto))
+        navigate(`/productos/editar/${id}`);
+    }
+
     return (
         <tr className="text-center">
             <td>{nombre}</td>
             <td> <span className="font-weight-bold">$ {precio}</span> </td>
             <td className="acciones">
-                <Link to={`/productos/editar/${id}`} className="btn  btn-primary mr-2"> Editar </Link>
+                <button
+                    typeof="button"
+                    className="btn btn-primary mr-2"
+                    onClick={() => redireccionEditar(producto)}
+                >Editar</button>
+
                 <button
                     type="button"
                     className="btn btn-danger"
