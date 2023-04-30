@@ -7,7 +7,11 @@ import {
     DESCARGA_PRODUCTOS_ERROR,
     COMENZAR_ELIMINACION_PRODUCTO,
     ELIMINACION_PRODUCTO_EXITO,
-    ELIMINACION_PRODUCTO_ERROR
+    ELIMINACION_PRODUCTO_ERROR,
+    OBTENER_PRODUCTO_EDITAR,
+    EDITAR_PRODUCTO,
+    EDITAR_PRODUCTO_EXITO,
+    EDITAR_PRODUCTO_ERROR
 } from "../types"
 
 //Cada reducer tiene su propio state
@@ -15,7 +19,7 @@ const initialState = {
     productos: [],
     error: null,
     loading: false,
-    productoeliminar: null
+    productoSeleccionado: null //Producto a relizarce algún action
 }
 
 export default function (state = initialState, action) {
@@ -26,6 +30,7 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: action.payload
             }
+
         case AGREGAR_PRODUCTO_EXITO:
             return {
                 ...state,
@@ -36,6 +41,7 @@ export default function (state = initialState, action) {
         case DESCARGA_PRODUCTOS_ERROR:
         case AGREGAR_PRODUCTO_ERROR:    
         case ELIMINACION_PRODUCTO_ERROR:
+        case EDITAR_PRODUCTO_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -51,15 +57,29 @@ export default function (state = initialState, action) {
             }
         
         case COMENZAR_ELIMINACION_PRODUCTO:
+        case OBTENER_PRODUCTO_EDITAR:
             return{
                 ...state,
-                productoeliminar: action.payload
+                productoSeleccionado: action.payload
             }
+
         case ELIMINACION_PRODUCTO_EXITO:
             return{
                 ...state,
-                productos: state.productos.filter( producto => producto.id !== state.productoeliminar),
-                productoeliminar: null
+                productos: state.productos.filter( producto => producto.id !== state.productoSeleccionado),
+                productoSeleccionado: null
+            }
+
+        case EDITAR_PRODUCTO_EXITO:
+            return{
+                ...state,
+                productos: state.productos.map( producto => {
+                    if(producto.id === action.payload.id){
+                        producto = action.payload
+                    }
+                    return producto                    
+                }),
+                productoSeleccionado: null
             }
 
         default:
