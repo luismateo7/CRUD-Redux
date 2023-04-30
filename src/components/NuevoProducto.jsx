@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 //Actions de Redux
 import { crearNuevoProductosAction } from "../actions/productoActions"
+import { mostrarAlertaAction } from "../actions/alertaActions";
 
 export default function NuevoProducto() {
 
@@ -13,26 +14,29 @@ export default function NuevoProducto() {
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState("");
 
-
   //Utilizar useDispatch y te crea una función
   const dispatch = useDispatch();
 
   //Acceder al state del store
   const cargando = useSelector(state => state.productos.loading);
   const error = useSelector(state => state.productos.error)
+  const alerta = useSelector(state => state.alerta.alerta)
 
   //Mandar a llamar el action de productoAction
-  const agregarProducto = (producto) => dispatch( crearNuevoProductosAction(producto) );
+  const agregarProducto = (producto) => dispatch(crearNuevoProductosAction(producto));
 
   const submitNuevoProducto = e => {
     e.preventDefault();
 
     //Validar Formulario
-    if(nombre.trim === "" || precio <= 0){
-      return;
+    if (nombre.trim === "" || precio <= 0) {
+      const respuesta = {
+        msg: "Ambos campos son obligatorios",
+        classes: "alert alert-danger text-center text-uppercase p3"
+      }
+      dispatch(mostrarAlertaAction(respuesta));
+      return
     }
-
-    //Si no hay errores
 
     //Crear nuevo producto
     agregarProducto({
@@ -52,6 +56,8 @@ export default function NuevoProducto() {
             <h2 className="text-center mb-4 font-weight-bold">
               Agregar Nuevo Producto
             </h2>
+
+            {alerta && <p className={alerta.classes}>{alerta.msg}</p>}
 
             <form
               onSubmit={submitNuevoProducto}
@@ -89,8 +95,8 @@ export default function NuevoProducto() {
 
             </form>
 
-            { cargando && <p>Cargando...</p>}
-            { error && <p className="alert alert-danger p2 mt-4 text-center">Hubo un error</p>}
+            {cargando && <p>Cargando...</p>}
+            {error && <p className="alert alert-danger p2 mt-4 text-center">Hubo un error</p>}
           </div>
         </div>
       </div>
