@@ -3,11 +3,13 @@ import { useEffect } from "react";
 //Redux
 import { useDispatch, useSelector } from "react-redux"
 import { obtenerProductosAction } from "../actions/productoActions"
+import { ocultarAlertaAction } from "../actions/alertaActions";
 import Producto from "./Producto";
 
 export default function Productos() {
 
   const dispatch = useDispatch();
+  dispatch(ocultarAlertaAction());
 
   useEffect(() => {
     //Consultar la API
