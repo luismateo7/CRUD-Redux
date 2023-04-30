@@ -52,5 +52,12 @@ h1 a.text-light:hover {
 
 table{
   margin: 0 auto !important;
+}
+
+.w-80{
   width: 80% !important;
+}
+
+.mb-2{
+  margin-bottom: 2rem !important;
 }
