@@ -58,6 +58,7 @@ export default function (state = initialState, action) {
         
         case COMENZAR_ELIMINACION_PRODUCTO:
         case OBTENER_PRODUCTO_EDITAR:
+        case EDITAR_PRODUCTO:
             return{
                 ...state,
                 productoSeleccionado: action.payload
